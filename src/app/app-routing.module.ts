@@ -1,10 +1,44 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
+import { PedirTurnoComponent } from './components/pedir-turno/pedir-turno.component';
+import { PrincipalAdministradorComponent } from './components/principal-administrador/principal-administrador.component';
+import { PrincipalComponent } from './components/principal/principal.component';
+import { RegistroAdministradorComponent } from './components/registro-administrador/registro-administrador.component';
+import { RegistroGeneralComponent } from './components/registro-general/registro-general.component';
+import { AuthGuardService } from './guards/auth-guard.service';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'Login', component: LoginComponent },
+  {
+    path: 'Principal',
+    component: PrincipalComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'Administrador',
+    component: PrincipalAdministradorComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'Registrar-admin',
+    component: RegistroAdministradorComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'Registro',
+    component: RegistroGeneralComponent,
+  },
+  {
+    path: 'Pedir-turno',
+    component: PedirTurnoComponent,
+    canActivate: [AuthGuardService],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

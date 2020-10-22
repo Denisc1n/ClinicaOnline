@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  box-sizing: border-box;
+  color: ghostwhite;
+}
+
+.cnt-paciente {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.cnt-pedir-turno,
+.cnt-turnos-paciente,
+.detalle-turnos {
+  width: 40%;
+  height: 80%;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 1px 8px 0px black;
+  overflow-y: auto;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 15%;
+  background: rgb(73, 158, 3);
+  color: ghostwhite;
+  letter-spacing: 5px;
+}
+
+.cnt-form {
+  height: 80%;
+}
+
+.button-filter {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 5%;
+}
+
+.button-filter button {
+  width: 35%;
+  background: rgb(97, 140, 78);
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  outline: none;
+  transition: 0.2s;
+}
+
+.button-filter button:hover {
+  background: rgb(58, 83, 47);
+  box-shadow: 0px 1px 2px 0px black;
+}
+
+.cnt-form .listado-apellido,
+.listado-especialidad,
+.listado-semana {
+  height: 50%;
+}
+
+.cnt-form ul {
+  width: 100%;
+  height: 30vh;
+  list-style: none;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.cnt-form ul li {
+  color: black;
+  padding: 4%;
+  border-radius: 30px;
+}
+
+.cnt-form ul li ul {
+  height: 10vh;
+}
+
+.cnt-form ul li ul li {
+  margin-top: 3%;
+}
+
+.cnt-form ul li ul li,
+.listado-apellido li,
+.listado-turnos ul li {
+  cursor: pointer;
+  transition: 0.3s;
+  background: rgba(110, 226, 56, 0.5);
+  box-shadow: inset 0px 0px 5px 2px rgb(73, 73, 73);
+}
+
+.cnt-form ul li ul li:hover,
+.listado-apellido ul li:hover {
+  color: rgb(15, 75, 153);
+  background: #fff;
+  box-shadow: inset 0px 0px 1px 2px rgb(73, 73, 73);
+}
+
+.listado-especialidad span,
+b {
+  color: black;
+}
+
+.listado-apellido ul {
+  padding: 4%;
+}
+
+.listado-apellido li {
+  margin-top: 2%;
+}
+
+.horarios-profesional {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 50%;
+}
+
+form {
+  width: 100%;
+  height: 100%;
+}
+
+.h-p-dia,
+.h-p-horario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 100%;
+  padding: 4%;
+}
+
+.h-p-dia {
+  height: 40%;
+}
+
+.h-p-horario {
+  height: 60%;
+}
+
+.h-p-dia select,
+.h-p-horario input[type="time"],
+.h-p-horario input[type="date"] {
+  width: 40%;
+  color: black;
+  display: block;
+  height: 4vh;
+  border-radius: 30px;
+  border: none;
+  background: rgba(110, 226, 56, 0.5);
+  box-shadow: inset 0px 0px 5px 2px rgb(73, 73, 73);
+  text-indent: 5px;
+}
+
+.h-p-horario input[type="date"] {
+  margin-top: 3%;
+}
+
+.h-p-dia select option {
+  color: black;
+}
+
+.h-p-dia label,
+.h-p-horario label {
+  color: black;
+  margin: 2% 0 2%;
+  text-transform: uppercase;
+}
+
+.h-p-horario input[type="submit"] {
+  background: rgb(97, 140, 78);
+  border: none;
+  width: 20%;
+  height: 4vh;
+  border-radius: 30px;
+  margin-top: 4%;
+  cursor: pointer;
+}
+
+.listado-turnos ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 30px;
+  height: 10%;
+  padding: 3%;
+  margin-top: 3%;
+  color: black;
+  cursor: auto;
+}
+
+.listado-turnos ul li:hover {
+  color: rgb(15, 75, 153);
+  background: #fff;
+  box-shadow: inset 0px 0px 1px 2px rgb(73, 73, 73);
+}
+
+.listado-turnos img {
+  width: 5%;
+}
+
+.li-turnos-ul {
+  list-style: none;
+  padding: 4%;
+  height: 20%;
+}
+
+.listado-turnos button {
+  background: rgb(15, 75, 153);
+  border: none;
+  width: 15%;
+  border-radius: 30px;
+  height: 3vh;
+  cursor: pointer;
+}
+
+.detalle-turnos {
+  height: 65%;
+  margin: 10% auto;
+}

@@ -1,18 +1,85 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import 'hammerjs';
+import { ToastrModule } from 'ngx-toastr';
+import { AuthenticationService } from './services/authentication.service';
+import { PrincipalComponent } from './components/principal/principal.component';
+import { AuthGuardService } from './guards/auth-guard.service';
+import { RegistroGeneralComponent } from './components/registro-general/registro-general.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
+import { UsersService } from './services/users.service';
+import { DataService } from './services/data.service';
+import { PedirTurnoComponent } from './components/pedir-turno/pedir-turno.component';
+import { IsActivePipe } from './pipes/is-active.pipe';
+import { PrincipalAdministradorComponent } from './components/principal-administrador/principal-administrador.component';
+import { RegistroAdministradorComponent } from './components/registro-administrador/registro-administrador.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    ToolbarComponent,
+    PrincipalComponent,
+    RegistroGeneralComponent,
+    PedirTurnoComponent,
+    IsActivePipe,
+    PrincipalAdministradorComponent,
+    RegistroAdministradorComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    MatCardModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    AngularFireAuthModule,
+    ToastrModule.forRoot({}),
+    NgbModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    MaterialFileInputModule,
+    MatSelectModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  exports: [MatFormFieldModule, MatInputModule],
+  providers: [
+    AuthenticationService,
+    AuthGuardService,
+    UsersService,
+    DataService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

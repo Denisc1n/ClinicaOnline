@@ -1,0 +1,41 @@
+<app-toolbar> </app-toolbar>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  class="activation-card"
+  *ngIf="
+    currentUser && !currentUser.isActive && currentUser.perfil === 'doctor'
+  "
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>La cuenta esta pendiente de activación</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        La cuenta necesita ser validada por el departamento de personal. Al ser
+        aprobada, verá aqui las herramientas para administrar sus turnos y
+        pacientes. Por favor aguarde. De no recibir respuesta en 24hs contactese
+        con RRHH.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  class="activation-card"
+  *ngIf="currentUser && currentUser.perfil === 'patient'"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Pedir Turno</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h1>¿Desea ser atendido?</h1>
+      <button mat-raised-button color="primary" routerLink="/Pedir-turno">
+        Pedir Turno
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

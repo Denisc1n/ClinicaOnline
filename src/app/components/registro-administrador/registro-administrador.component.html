@@ -1,0 +1,66 @@
+<app-toolbar [profile]="profile"></app-toolbar>
+<br />
+<h1 style="text-align: center; color: blueviolet">Alta Administrador</h1>
+<br />
+<div fxLayout="row" fxLayoutAlign="center center" class="cntRegistro">
+  <form class="formulario" [formGroup]="adminRegistrationForm">
+    <br />
+    <mat-form-field class="datos-pacientes-pt1">
+      <input
+        matInput
+        formControlName="firstName"
+        placeholder="Nombre"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field class="datos-pacientes-pt1">
+      <input
+        matInput
+        formControlName="lastName"
+        placeholder="Apellido"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="datos-pacientes-pt1">
+      <input
+        matInput
+        formControlName="email"
+        placeholder="Correo Electrónico"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="datos-pacientes-pt1">
+      <input
+        matInput
+        formControlName="password"
+        placeholder="Contraseña"
+        type="password"
+        required
+        color="primary"
+      />
+    </mat-form-field>
+    <mat-form-field class="datos-pacientes-pt1">
+      <input
+        matInput
+        formControlName="repeatPassword"
+        placeholder="Repita la Contraseña"
+        type="password"
+        required
+      />
+    </mat-form-field>
+    <div class="rto">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!adminRegistrationForm.valid"
+        (click)="register()"
+      >
+        Registrar
+      </button>
+      <button mat-raised-button color="primary" (click)="cancel()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

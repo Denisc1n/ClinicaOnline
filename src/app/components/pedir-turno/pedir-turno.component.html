@@ -1,0 +1,44 @@
+<app-toolbar></app-toolbar>
+<div fxLayout="row" fxLayoutAlign="center center" class="activation-card">
+  <h1 style="color: blueviolet">Pedir Turno</h1>
+</div>
+<div class="cnt-form">
+  <div class="button-filter">
+    <button (click)="filterLastName()">Apellido</button>
+    <button (click)="filterPractice()">Especialidad</button>
+    <button (click)="filterWeek()">Semana</button>
+  </div>
+  <div class="listado-apellido" *ngIf="this.listadoMostrar == 'doctor-list'">
+    <ul>
+      <li
+        *ngFor="let profesional of this.doctors | isActive"
+        (click)="setHorariosProfesional(profesional)"
+      >
+        {{ profesional.apellido }}
+      </li>
+    </ul>
+  </div>
+  <div class="listado-apellido" *ngIf="this.listadoMostrar == 'practice-list'">
+    <ul>
+      <li
+        *ngFor="let especialidad of this.practices"
+        (click)="selectPractice(especialidad.nombre)"
+      >
+        <b>{{ especialidad.nombre | uppercase }}</b>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="listado-apellido"
+    *ngIf="this.listadoMostrar == 'practiceDoctors-list'"
+  >
+    <ul>
+      <li
+        *ngFor="let especialidad of this.filteredDoctors"
+        (click)="selectPractice(especialidad.nombre)"
+      >
+        <b>{{ especialidad.nombre | uppercase }}</b>
+      </li>
+    </ul>
+  </div>
+</div>

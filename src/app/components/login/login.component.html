@@ -1,0 +1,53 @@
+<app-toolbar></app-toolbar>
+<div fxLayout="row" fxLayoutAlign="center center" class="login-main">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Inicio de Sesión</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="column">
+      <div class="container">
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="login()"
+          class="needs-validation"
+          novalidate
+        >
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="email"
+              placeholder="Email"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="password"
+              matInput
+              formControlName="password"
+              placeholder="password"
+              required
+            />
+          </mat-form-field>
+          <mat-card-actions align="end">
+            <button
+              mat-raised-button
+              color="primary"
+              [routerLink]="['/Registro']"
+            >
+              Registrarse
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!loginForm.valid"
+            >
+              Ingresar
+            </button>
+          </mat-card-actions>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
