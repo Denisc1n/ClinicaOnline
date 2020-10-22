@@ -8,6 +8,7 @@ import { firestore } from 'firebase';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../services/data.service';
 import { UsersService } from '../../services/users.service';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registro-general',
@@ -15,6 +16,9 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./registro-general.component.css'],
 })
 export class RegistroGeneralComponent implements OnInit {
+  profile = '';
+  showHome = true;
+  showLogout = false;
   captcha: string;
   listadoImagenes;
   pacientes = [];
@@ -41,7 +45,9 @@ export class RegistroGeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      email: new FormControl(''),
+      email: new FormControl('', [
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      ]),
       password: new FormControl(''),
       repeatPassword: new FormControl(''),
       firstName: new FormControl(''),
@@ -121,11 +127,11 @@ export class RegistroGeneralComponent implements OnInit {
           user.sendEmailVerification();
         });
         this.toastr.success(
-          'Por favor verifique su correo electrónico, donde encontrará un link de activación.'
+          'Por favor verifique su correo electrónico, donde encontrará un link de activación. Sera redirigido en breve...'
         );
         setTimeout(() => {
           this.router.navigate(['Login']);
-        }, 5000);
+        }, 3000);
       })
       .catch((error) => {
         this.toastr.error('Email ya registrado');
@@ -167,14 +173,13 @@ export class RegistroGeneralComponent implements OnInit {
           user.sendEmailVerification();
         });
         this.toastr.success(
-          'Por favor verifique su correo electrónico, donde encontrará un link de activación.'
+          'Por favor verifique su correo electrónico, donde encontrará un link de activación. Sera redirigido en breve..'
         );
         setTimeout(() => {
           this.router.navigate(['Login']);
-        }, 5000);
+        }, 3000);
       })
       .catch((error) => {
-        console.log(error.message);
         this.toastr.error('Email ya registrado');
       });
   }
@@ -184,5 +189,9 @@ export class RegistroGeneralComponent implements OnInit {
     this.data.getPractices().then((response) => {
       this.practices = response;
     });
+  }
+
+  get emailCheck() {
+    return this.registrationForm.get('email');
   }
 }

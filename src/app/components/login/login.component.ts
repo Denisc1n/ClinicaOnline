@@ -13,6 +13,9 @@ import { UsersService } from '../../services/users.service';
 export class LoginComponent implements OnInit {
   public username;
   public password;
+  showLogout = false;
+  showHome = false;
+
   constructor(
     private authenticationService: AuthenticationService,
     private toastrService: ToastrService,
@@ -31,24 +34,23 @@ export class LoginComponent implements OnInit {
     this.authenticationService
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .then((res: firebase.auth.UserCredential) => {
-        if (res.user.emailVerified) {
-          this.usersService
-            .getUserProfile(this.loginForm.value.email)
-            .then((user) => {
-              console.log(user);
-              if (user != 'administrator') {
+        this.usersService
+          .getUserProfile(this.loginForm.value.email)
+          .then((user) => {
+            if (user != 'administrator') {
+              if (res.user.emailVerified) {
                 this.router.navigate(['/Principal']);
               } else {
-                this.router.navigate(['/Administrador']);
+                this.toastrService.error(
+                  'Por favor, verifique su correo electrónico clickeando en el link que le fue enviado a la dirección indicada en el registro',
+                  'Verificacion Pendiente',
+                  { positionClass: 'toast-center-center' }
+                );
               }
-            });
-        } else {
-          this.toastrService.error(
-            'Por favor, verifique su correo electrónico clickeando en el link que le fue enviado a la dirección indicada en el registro',
-            'Verificacion Pendiente',
-            { positionClass: 'toast-center-center' }
-          );
-        }
+            } else {
+              this.router.navigate(['/Administrador']);
+            }
+          });
       })
       .catch((error) => {
         this.toastrService.error(

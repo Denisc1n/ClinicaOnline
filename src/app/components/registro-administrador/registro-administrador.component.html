@@ -1,4 +1,8 @@
-<app-toolbar [profile]="profile"></app-toolbar>
+<app-toolbar
+  [showHomeButton]="showHome"
+  [profile]="profile"
+  [showLogout]="showLogout"
+></app-toolbar>
 <br />
 <h1 style="text-align: center; color: blueviolet">Alta Administrador</h1>
 <br />
@@ -28,6 +32,7 @@
         formControlName="email"
         placeholder="Correo Electrónico"
         required
+        email="true"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -38,6 +43,7 @@
         type="password"
         required
         color="primary"
+        minlength="6"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -47,6 +53,7 @@
         placeholder="Repita la Contraseña"
         type="password"
         required
+        minlength="6"
       />
     </mat-form-field>
     <div class="rto">

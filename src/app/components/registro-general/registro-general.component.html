@@ -1,4 +1,8 @@
-<app-toolbar></app-toolbar>
+<app-toolbar
+  [showLogout]="showLogout"
+  [profile]="profile"
+  [showHomeButton]="showHome"
+></app-toolbar>
 <div fxLayout="row" fxLayoutAlign="center center" class="cntRegistro">
   <div class="options" *ngIf="!user">
     <button mat-raised-button color="primary" (click)="nuevo('patient')">
@@ -15,6 +19,7 @@
     *ngIf="user == 'patient'"
     novalidate
   >
+    <h1 class="title">Alta Paciente</h1>
     <mat-form-field class="datos-pacientes-pt1">
       <input
         matInput
@@ -38,6 +43,7 @@
         formControlName="email"
         placeholder="Correo Electrónico"
         required
+        email="true"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -48,6 +54,7 @@
         type="password"
         required
         color="primary"
+        minlength="6"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -57,6 +64,7 @@
         placeholder="Repita la Contraseña"
         type="password"
         required
+        minlength="6"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -100,10 +108,12 @@
     </div>
   </form>
   <form
-    class="formulario"
+    class="formularioProfesional"
     [formGroup]="doctorRegistrationForm"
     *ngIf="user == 'doctor'"
+    novalidate
   >
+    <h1 class="title" style="background: #fdd835">Alta Profesional</h1>
     <mat-form-field class="datos-pacientes-pt1">
       <input
         matInput
@@ -127,6 +137,7 @@
         formControlName="email"
         placeholder="Correo Electrónico"
         required
+        email="true"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -137,6 +148,7 @@
         type="password"
         required
         color="primary"
+        minlength="6"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -146,6 +158,7 @@
         placeholder="Repita la Contraseña"
         type="password"
         required
+        minlength="6"
       />
     </mat-form-field>
     <mat-form-field class="datos-pacientes-pt1">
@@ -166,17 +179,19 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        name="nueva-especialidad"
-        placeholder="Agregue especialidad"
-        formControlName="newPractice"
-      />
-    </mat-form-field>
-    <button mat-raised-button color="accent" (click)="addPractice()">
-      AGREGAR
-    </button>
+    <div>
+      <mat-form-field class="datos-pacientes-pt1">
+        <input
+          matInput
+          name="nueva-especialidad"
+          placeholder="Agregue especialidad"
+          formControlName="newPractice"
+        />
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="addPractice()">
+        AGREGAR
+      </button>
+    </div>
     <mat-form-field class="datos-pacientes-pt1">
       <ngx-mat-file-input
         formControlName="file"
@@ -185,7 +200,7 @@
       >
       </ngx-mat-file-input>
     </mat-form-field>
-    <div class="captcha">
+    <div>
       <div class="captcha-submit">
         <re-captcha
           (resolved)="resolved($event)"
@@ -193,7 +208,6 @@
         >
         </re-captcha>
       </div>
-      <p></p>
     </div>
     <div class="rto">
       <button

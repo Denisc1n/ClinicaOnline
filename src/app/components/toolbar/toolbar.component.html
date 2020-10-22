@@ -1,8 +1,10 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <div>Clinica Online</div>
-    <a mat-button (click)="home()">Home</a>
+    <a mat-button *ngIf="showHomeButton" (click)="home()">Home</a>
     <span class="spacer"></span>
-    <a mat-button routerLink="/register">Acerca De</a>
+    <span class="spacer"></span>
+    <a mat-button *ngIf="showLogout" (click)="logout()">Logout</a>
+    <!-- <a mat-button routerLink="/register">Acerca De</a> -->
   </mat-toolbar-row>
 </mat-toolbar>

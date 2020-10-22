@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UsersService } from '../../services/users.service';
 
@@ -8,6 +8,10 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./principal.component.css'],
 })
 export class PrincipalComponent implements OnInit {
+  showHome = true;
+  profile = 'patient';
+  showLogout = true;
+
   public currentUser;
 
   constructor(

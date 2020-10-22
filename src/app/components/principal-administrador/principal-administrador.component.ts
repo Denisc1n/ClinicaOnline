@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalAdministradorComponent implements OnInit {
   profile = 'administrator';
+  showHome = true;
+  showLogout = true;
   constructor() {}
 
   ngOnInit(): void {}

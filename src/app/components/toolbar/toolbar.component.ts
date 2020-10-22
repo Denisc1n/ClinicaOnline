@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,18 +9,24 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
   @Input() profile;
-  constructor(private router: Router) {}
+  @Input() showHomeButton;
+  @Input() showLogout = false;
+  constructor(private router: Router, private fireAuth: AngularFireAuth) {}
 
   ngOnInit(): void {}
 
   home() {
-    console.log(this.profile);
     if (this.profile == 'doctor' || this.profile == 'patient') {
       this.router.navigate(['Principal']);
     } else if (this.profile == 'administrator') {
       this.router.navigate(['Administrador']);
     } else {
-      // this.router.navigate(['Login']);
+      this.router.navigate(['Login']);
     }
+  }
+
+  logout() {
+    this.fireAuth.signOut();
+    this.router.navigate(['Login']);
   }
 }

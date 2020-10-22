@@ -16,8 +16,6 @@ export class AuthenticationService {
         .catch((err) => {
           reject(err);
         });
-
-      //const user = this.getCurrentUser().then((user) => console.log(user));
     });
   }
 }

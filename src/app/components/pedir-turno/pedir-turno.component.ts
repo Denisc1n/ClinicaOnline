@@ -7,10 +7,12 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./pedir-turno.component.css'],
 })
 export class PedirTurnoComponent implements OnInit {
+  showHome = true;
+  showLogout = true;
+  profile = 'patient';
   doctors: any;
   practices: any;
   showSpecialtyDoctors: boolean;
-
   listadoMostrar: string = 'doctor-list';
   constructor(private dataService: DataService) {}
 
@@ -20,7 +22,6 @@ export class PedirTurnoComponent implements OnInit {
     });
     this.dataService.getTodasEspecialidades().then((datos) => {
       this.practices = datos;
-      console.log(this.practices);
     });
   }
   filterLastName() {
@@ -32,7 +33,5 @@ export class PedirTurnoComponent implements OnInit {
   filterWeek() {
     this.listadoMostrar = 'listado-semana';
   }
-  selectPractice(practice) {
-    console.log(practice);
-  }
+  selectPractice(practice) {}
 }

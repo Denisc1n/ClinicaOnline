@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -36,17 +37,21 @@ export class UsersService {
     let currUserEmail;
     let currUser;
     return new Promise((resolve, reject) => {
-      this.fireAuth.currentUser.then((response) => {
-        currUserEmail = response.email;
-        this.db
-          .collection('users')
-          .ref.where('email', '==', currUserEmail)
-          .get()
-          .then((response) => {
-            currUser = response.docs[0].data();
-            resolve(currUser);
-          });
-      });
+      this.fireAuth.currentUser
+        .then((response) => {
+          currUserEmail = response.email;
+          this.db
+            .collection('users')
+            .ref.where('email', '==', currUserEmail)
+            .get()
+            .then((response) => {
+              currUser = response.docs[0].data();
+              resolve(currUser);
+            });
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   }
 
@@ -58,12 +63,14 @@ export class UsersService {
         .get()
         .then((response) => {
           resolve(response.data().perfil);
+        })
+        .catch((error) => {
+          reject(error);
         });
     });
   }
 
   addPracticeDoctor(practice, email) {
-    console.log(practice);
     this.db
       .collection('practices')
       .ref.where('nombre', 'in', practice)
