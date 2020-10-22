@@ -1,0 +1,59 @@
+<app-toolbar
+  [profile]="profile"
+  [showHomeButton]="showHome"
+  [showLogout]="showLogout"
+>
+</app-toolbar>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <table mat-table [dataSource]="doctors">
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef>Apellido</th>
+      <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="practices">
+      <th mat-header-cell *matHeaderCellDef>Especialidad(es)</th>
+      <td mat-cell *matCellDef="let element">{{ element.especialidades }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Accion(es)</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="activateUser(element)"
+        >
+          Habilitar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <!-- <tbody>
+      <tr *ngFor="let doctor of doctors">
+        <td>{{ doctor.apellido }}</td>
+        <td>{{ doctor.nombre }}</td>
+        <td>{{ doctor.correo }}</td>
+        <td>{{ doctor.especialidades }}</td>
+      </tr>
+    </tbody> -->
+  </table>
+</div>

@@ -88,4 +88,8 @@ export class UsersService {
         });
       });
   }
+
+  activateDoctorAccount(doctorEmail) {
+    this.db.collection('users').doc(doctorEmail).update({ activo: true });
+  }
 }

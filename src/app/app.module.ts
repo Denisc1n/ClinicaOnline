@@ -35,6 +35,8 @@ import { PedirTurnoComponent } from './components/pedir-turno/pedir-turno.compon
 import { IsActivePipe } from './pipes/is-active.pipe';
 import { PrincipalAdministradorComponent } from './components/principal-administrador/principal-administrador.component';
 import { RegistroAdministradorComponent } from './components/registro-administrador/registro-administrador.component';
+import { AltaProfesionalesComponent } from './components/alta-profesionales/alta-profesionales.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { RegistroAdministradorComponent } from './components/registro-administra
     IsActivePipe,
     PrincipalAdministradorComponent,
     RegistroAdministradorComponent,
+    AltaProfesionalesComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { RegistroAdministradorComponent } from './components/registro-administra
     RecaptchaFormsModule,
     MaterialFileInputModule,
     MatSelectModule,
+    MatTableModule,
   ],
   exports: [MatFormFieldModule, MatInputModule],
   providers: [

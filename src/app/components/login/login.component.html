@@ -51,6 +51,17 @@
           </mat-card-actions>
         </form>
       </div>
+      <div></div>
     </mat-card-content>
+    <mat-label style="color: blueviolet">Fake login</mat-label>
+    <mat-select style="color: blueviolet">
+      <mat-option
+        style="color: blueviolet"
+        *ngFor="let user of preloadedUsers"
+        (click)="completeValues(user)"
+      >
+        {{ user.tipo }} - {{ user.email }}
+      </mat-option>
+    </mat-select>
   </mat-card>
 </div>

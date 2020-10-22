@@ -56,4 +56,21 @@ export class DataService {
         );
     });
   }
+
+  getPendingApprovalDoctors() {
+    let pendingDoctors = [];
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection('users')
+        .ref.where('perfil', '==', 'doctor')
+        .where('activo', '==', false)
+        .get()
+        .then((data) => {
+          data.docs.forEach((doc) => {
+            pendingDoctors.push(doc.data());
+          });
+          resolve(pendingDoctors);
+        });
+    });
+  }
 }

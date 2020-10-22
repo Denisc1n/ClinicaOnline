@@ -3,14 +3,30 @@
   [profile]="profile"
   [showLogout]="showLogout"
 ></app-toolbar>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Crear Nuevo Admin</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <h1>Alta de Administradores</h1>
-    <button mat-raised-button color="primary" routerLink="/Registrar-admin">
-      Registrar
-    </button>
-  </mat-card-content>
-</mat-card>
+<div fxLayout="row" fxLayoutAlign="center center" class="login-main">
+  <mat-card style="width: 30%">
+    <mat-card-header>
+      <mat-card-title>Crear Nuevo Admin</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button color="primary" routerLink="/Registrar-admin">
+        Registrar
+      </button>
+    </mat-card-content>
+  </mat-card>
+  <br />
+  <mat-card style="width: 30%">
+    <mat-card-header>
+      <mat-card-title>Habilitar Profesional</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/Alta-profesionales"
+      >
+        Dar de Alta
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

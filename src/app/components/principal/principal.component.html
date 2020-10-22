@@ -8,9 +8,7 @@
   fxLayout="row"
   fxLayoutAlign="center center"
   class="activation-card"
-  *ngIf="
-    currentUser && !currentUser.isActive && currentUser.perfil === 'doctor'
-  "
+  *ngIf="currentUser && !currentUser.activo && currentUser.perfil === 'doctor'"
 >
   <mat-card>
     <mat-card-header>
@@ -22,6 +20,26 @@
         aprobada, verá aqui las herramientas para administrar sus turnos y
         pacientes. Por favor aguarde. De no recibir respuesta en 24hs contactese
         con RRHH.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  class="activation-card"
+  *ngIf="currentUser && currentUser.activo && currentUser.perfil === 'doctor'"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Plataforma en Construcción</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        En esta seccion se encontraran los controles para operar como
+        profesional. Tales operaciones comprende administracion de turnos,
+        gestion y listado de reseñas de servicio, configuracion de ventanas
+        horarias de atencion.
       </p>
     </mat-card-content>
   </mat-card>

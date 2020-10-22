@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../services/data.service';
 import { UsersService } from '../../services/users.service';
 import { Validators } from '@angular/forms';
+import { forEachChild } from 'typescript';
 
 @Component({
   selector: 'app-registro-general',
@@ -23,7 +24,7 @@ export class RegistroGeneralComponent implements OnInit {
   listadoImagenes;
   pacientes = [];
   profesionales = [];
-  practices: any = [];
+  practices: any;
   user;
   fotoUno = '';
   fotoDos = '';
@@ -185,10 +186,22 @@ export class RegistroGeneralComponent implements OnInit {
   }
 
   addPractice() {
-    this.data.createPractice(this.doctorRegistrationForm.value.newPractice);
-    this.data.getPractices().then((response) => {
-      this.practices = response;
+    let practiceArray: any[] = this.practices;
+    let isPracticeOnList: boolean = false;
+    practiceArray.forEach((practice) => {
+      if (practice.nombre === this.doctorRegistrationForm.value.newPractice) {
+        this.toastr.error('Especialidad ya incluida');
+        isPracticeOnList = true;
+      }
     });
+    if (!isPracticeOnList) {
+      this.data.createPractice(this.doctorRegistrationForm.value.newPractice);
+      this.data.getPractices().then((response) => {
+        this.practices = response;
+      });
+      this.doctorRegistrationForm.patchValue({ newPractice: '' });
+      this.toastr.success('Se agrego la especialidad a la lista de selección.');
+    }
   }
 
   get emailCheck() {
