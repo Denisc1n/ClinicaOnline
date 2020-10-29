@@ -30,24 +30,24 @@ El doctor es la entidad esencial ya que permite la correcta operatoria. Puede at
 
 Inicialmente, el usuario final se encontrara en una pantalla de login, desde aqui podra registrarse o bien iniciar sesion con sus credenciales.
 
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/login.png "Pantalla:")
+![](/readme_resources/login.png "Pantalla:")
 
 ### Registro
 
 En principio se debe indicar que perfil se desea generar, luego se veran dos formularios posibles:
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroPaso1.png "Pantalla:")
+![](/readme_resources/registroPaso1.png "Pantalla:")
 
 #### Registro Paciente
 
 Formulario de registro Paciente:
 
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroPasoPaciente.png "Pantalla:")
+![](/readme_resources/registroPasoPaciente.png "Pantalla:")
 
 #### Registro Doctor
 
 Formulario de registro Doctor:
 
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroPasoProfesional.png "Pantalla:")
+![](/readme_resources/registroPasoProfesional.png "Pantalla:")
 
 #### Validacion de correo
 
@@ -56,37 +56,37 @@ El correo electronico se valida para ambos perfiles. Se envia un correo electron
 #### Paciente
 
 El paciente sera dirigido a su pantalla principal, donde podra ver sus turnos actuales con acciones tales como cancelar, dar una reseña y ver la reseña recibida.
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/principalPaciente.png "Pantalla:")
+![](/readme_resources/principalPaciente.png "Pantalla:")
 
 ##### Pedir turno
 
 El paciente podra elegir profesionales y horarios:
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/pedirTurno.png "Pantalla:")
+![](/readme_resources/pedirTurno.png "Pantalla:")
 
 #### Doctor
 
 El doctor, al iniciar sesion, sera redirigido a su pantalla principal, donde podra ver proximos turnos, cancelarlos, atenderlos, dar reseñas, y configurar sus horarios.
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/principalDoctor.png "Pantalla:")
+![](/readme_resources/principalDoctor.png "Pantalla:")
 
 ##### Horarios
 
 Para configurar horarios simplemente debe especificar que dias de la semana y en que franja horaria.
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/horariosDoctor.png "Pantalla:")
+![](/readme_resources/horariosDoctor.png "Pantalla:")
 
 #### Administrador
 
 El administrador tiene su propia pagina principal tambien, desde donde podra generar nuevos administradores o habilitar profesiones, entre otras.
 
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/principalAdmin.png "Pantalla:")
+![](/readme_resources/principalAdmin.png "Pantalla:")
 
 ##### Dar de alta profesionales
 
 Para dar de alta un profesional, al ingresar a la opcion desde la pagina principal se vera una tabla con datos una clara opcion de Habilitar.
 
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/habilitacionDeProfesionales.png "Pantalla:")
+![](/readme_resources/habilitacionDeProfesionales.png "Pantalla:")
 
 ##### Generar otros administradores
 
 Si en cambio, se quiere generar otros administradores, solo basta con completar este formulario.
 
-![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroAdministrador.png "Pantalla:")
+![](/readme_resources/registroAdministrador.png "Pantalla:")
