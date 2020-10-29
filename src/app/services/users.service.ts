@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { rejects } from 'assert';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -91,5 +89,11 @@ export class UsersService {
 
   activateDoctorAccount(doctorEmail) {
     this.db.collection('users').doc(doctorEmail).update({ activo: true });
+  }
+
+  saveDoctorAvailableTime(doctorEmail, times) {
+    this.db.collection('users').doc(doctorEmail).update({
+      horarios: times,
+    });
   }
 }

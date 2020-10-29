@@ -1,27 +1,92 @@
 # ClinicaOnline
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
+La Clinica Online es un sistema de gestion de turnos. Su objetivo es facilitar la solicitud, atencion y evaluacion de pacientes y doctores que utilicen la plataforma, asi como proveer herramientas de reportes para poder llevar un control de operaciones.
 
-## Development server
+## Tecnologia
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Stack de tecnologias: El stack utilizado consiste en Angular (Incluyendo Angular Material), Typescript, y Firebase (Database, Storage).
 
-## Code scaffolding
+## Caso de Uso
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+El caso de uso se basa en una clinica que permite a sus profesionales registrarse indicando datos minimos y especialidades, para luego necesitar ser validados internamente por un perfil administrador. Asimismo, los pacientes tambien deben registrarse en la plataforma validando su correo electronico.
 
-## Build
+## Perfiles
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Administrador
 
-## Running unit tests
+Este perfil posee los atributos para administrar cualquier entidad dentro de la plataforma. Como la intencion de este proyecto es que sea "Llave en mano" El administrador se entrega generado (MasterAdmin) para luego desde ese usuario generar los administradores que hagan falta para la operacion.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Paciente
 
-## Running end-to-end tests
+El paciente es una de los usuarios finales que maneja la plataforma. Sus funciones incluyen la solicitud de turnos y la redaccion de reseñas a doctores que lo atendieron.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Doctor
 
-## Further help
+El doctor es la entidad esencial ya que permite la correcta operatoria. Puede atender turnos, escribir reseñas y actualizar historias clinicas de los pacientes que atiende. Todo esto mientras puede tambien cambiar sus horarios de trabajo, cancelar turnos en caso de ser necesario y tambien validar informacion de los turnos actuales.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## ¿Como lo Uso?
+
+### Login
+
+Inicialmente, el usuario final se encontrara en una pantalla de login, desde aqui podra registrarse o bien iniciar sesion con sus credenciales.
+
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/login.png "Pantalla:")
+
+### Registro
+
+En principio se debe indicar que perfil se desea generar, luego se veran dos formularios posibles:
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroPaso1.png "Pantalla:")
+
+#### Registro Paciente
+
+Formulario de registro Paciente:
+
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroPasoPaciente.png "Pantalla:")
+
+#### Registro Doctor
+
+Formulario de registro Doctor:
+
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroPasoProfesional.png "Pantalla:")
+
+#### Validacion de correo
+
+El correo electronico se valida para ambos perfiles. Se envia un correo electronico de verificacion desde firebase, al clickear el link la cuenta se encuentra activada y pueden acceder. Con la salvedad de los doctores, que ademas deberan ser validados por un administrador.
+
+#### Paciente
+
+El paciente sera dirigido a su pantalla principal, donde podra ver sus turnos actuales con acciones tales como cancelar, dar una reseña y ver la reseña recibida.
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/principalPaciente.png "Pantalla:")
+
+##### Pedir turno
+
+El paciente podra elegir profesionales y horarios:
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/pedirTurno.png "Pantalla:")
+
+#### Doctor
+
+El doctor, al iniciar sesion, sera redirigido a su pantalla principal, donde podra ver proximos turnos, cancelarlos, atenderlos, dar reseñas, y configurar sus horarios.
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/principalDoctor.png "Pantalla:")
+
+##### Horarios
+
+Para configurar horarios simplemente debe especificar que dias de la semana y en que franja horaria.
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/horariosDoctor.png "Pantalla:")
+
+#### Administrador
+
+El administrador tiene su propia pagina principal tambien, desde donde podra generar nuevos administradores o habilitar profesiones, entre otras.
+
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/principalAdmin.png "Pantalla:")
+
+##### Dar de alta profesionales
+
+Para dar de alta un profesional, al ingresar a la opcion desde la pagina principal se vera una tabla con datos una clara opcion de Habilitar.
+
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/habilitacionDeProfesionales.png "Pantalla:")
+
+##### Generar otros administradores
+
+Si en cambio, se quiere generar otros administradores, solo basta con completar este formulario.
+
+![alt text](https://github.com/Denisc1n/ClinicaOnline/tree/master/readme_resources/registroAdministrador.png "Pantalla:")

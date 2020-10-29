@@ -1,0 +1,114 @@
+<app-toolbar
+  [profile]="profile"
+  [showHomeButton]="showHome"
+  [showLogout]="showLogout"
+></app-toolbar>
+<br />
+<div fxLayout="column" fxLayoutAlign="center center" class="activation-card">
+  <mat-card style="width: 25%">
+    <mat-card-header>
+      <mat-card-title>Configurar Horarios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="column">
+      Días:
+      <mat-select
+        panelClass="mat-select-panel"
+        required
+        multiple
+        [(ngModel)]="selectedDays"
+      >
+        <mat-option value="lunes">Lúnes</mat-option>
+        <mat-option value="martes">Martes</mat-option>
+        <mat-option value="miercoles">Miércoles</mat-option>
+        <mat-option value="jueves">Jueves</mat-option>
+        <mat-option value="viernes">Viernes</mat-option>
+        <mat-option value="sabado" (click)="showSaturdayPick()"
+          >Sábado</mat-option
+        >
+        <!-- <mat-option *ngFor="let day of weekdays" value="{{ day }}"
+          >{{ day }}
+        </mat-option> -->
+      </mat-select>
+      Inicio:<ngb-timepicker
+        [formControl]="start"
+        [minuteStep]="30"
+        required
+      ></ngb-timepicker>
+      <div *ngIf="start.valid" class="small form-text text-success">
+        Horario Válido
+      </div>
+      <div *ngIf="start.errors" class="small form-text text-danger">
+        <div *ngIf="start.errors['required']">
+          Seleccione un horario entre 09:00 y 19:00
+        </div>
+        <div *ngIf="start.errors['tooLate']">Seleccione horario Anterior.</div>
+        <div *ngIf="start.errors['tooEarly']">Seleccione horario Posterior</div>
+      </div>
+      <br />
+      Fin:
+      <ngb-timepicker
+        [formControl]="end"
+        [minuteStep]="30"
+        required
+      ></ngb-timepicker>
+      <div *ngIf="end.valid" class="small form-text text-success">
+        Horario Válido
+      </div>
+      <div *ngIf="end.errors" class="small form-text text-danger">
+        <div *ngIf="end.errors['required']">Seleccione un horario.</div>
+        <div *ngIf="end.errors['tooLate']">
+          Seleccione horario aAnterior al de cierre.
+        </div>
+        <div *ngIf="end.errors['tooEarly']">
+          Seleccione horario Posterior al de inicio
+        </div>
+      </div>
+      <div *ngIf="showSaturdayTimePick">
+        Inicio Sabado:<ngb-timepicker
+          [formControl]="startSaturday"
+          [minuteStep]="30"
+          required
+        ></ngb-timepicker>
+        <div *ngIf="startSaturday.valid" class="small form-text text-success">
+          Horario Válido
+        </div>
+        <div *ngIf="startSaturday.errors" class="small form-text text-danger">
+          <div *ngIf="startSaturday.errors['required']">
+            Seleccione un horario entre 09:00 y 14:00
+          </div>
+          <div *ngIf="startSaturday.errors['tooLate']">
+            Seleccione horario Anterior.
+          </div>
+          <div *ngIf="startSaturday.errors['tooEarly']">
+            Seleccione horario Posterior
+          </div>
+        </div>
+        <br />
+        Fin Sábado:
+        <ngb-timepicker
+          [formControl]="endSaturday"
+          [minuteStep]="30"
+          required
+        ></ngb-timepicker>
+        <div *ngIf="endSaturday.valid" class="small form-text text-success">
+          Horario Válido
+        </div>
+        <div *ngIf="endSaturday.errors" class="small form-text text-danger">
+          <div *ngIf="endSaturday.errors['required']">
+            Seleccione un horario.
+          </div>
+          <div *ngIf="endSaturday.errors['tooLate']">
+            Seleccione horario aAnterior al de cierre.
+          </div>
+          <div *ngIf="endSaturday.errors['tooEarly']">
+            Seleccione horario Posterior al de inicio
+          </div>
+        </div>
+      </div>
+      <br />
+      <button mat-raised-button color="primary" (click)="saveTimeSchedule()">
+        Guardar
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

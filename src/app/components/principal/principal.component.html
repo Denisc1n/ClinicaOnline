@@ -32,20 +32,21 @@
 >
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Plataforma en Construcción</mat-card-title>
+      <mat-card-title>Configurar Horarios</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p>
-        En esta seccion se encontraran los controles para operar como
-        profesional. Tales operaciones comprende administracion de turnos,
-        gestion y listado de reseñas de servicio, configuracion de ventanas
-        horarias de atencion.
-      </p>
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/Administrar-horarios"
+      >
+        Configurar
+      </button>
     </mat-card-content>
   </mat-card>
 </div>
 <div
-  fxLayout="row"
+  fxLayout="column"
   fxLayoutAlign="center center"
   class="activation-card"
   *ngIf="currentUser && currentUser.perfil === 'patient'"
@@ -61,4 +62,127 @@
       </button>
     </mat-card-content>
   </mat-card>
+  <br />
+</div>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  style="width: 100%"
+  *ngIf="currentUser && currentUser.perfil === 'patient'"
+>
+  <table
+    mat-table
+    [dataSource]="appointments"
+    style="color: blueviolet; width: 100%"
+  >
+    <ng-container matColumnDef="doctorName">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.doctorName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.doctor }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Hora</th>
+      <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Accion(es)</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="cancelAppointment(element)"
+          [disabled]="element.isDone || element.isCancelled"
+        >
+          Cancelar Turno
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="writeSummary(element)"
+          [disabled]="element.isCancelled || element.hasSummaryPatient"
+        >
+          Dar Reseña
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  style="width: 100%"
+  *ngIf="currentUser && currentUser.perfil === 'doctor'"
+>
+  <table
+    mat-table
+    [dataSource]="appointments"
+    style="color: blueviolet; width: 100%"
+  >
+    <ng-container matColumnDef="doctorName">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.patientName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.patient }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Hora</th>
+      <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Accion(es)</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          [disabled]="element.isDone || element.isCancelled"
+          mat-raised-button
+          color="primary"
+          (click)="activateAppointment(element)"
+        >
+          Atender
+        </button>
+        <button
+          [disabled]="element.isDone || element.isCancelled"
+          mat-raised-button
+          color="warn"
+          (click)="cancelAppointment(element)"
+        >
+          Cancelar Turno
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="writeSummary(element)"
+          [disabled]="!element.isDone || element.hasSummaryDoctor"
+        >
+          Dar Reseña
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>

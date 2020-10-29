@@ -148,7 +148,6 @@ export class RegistroGeneralComponent implements OnInit {
         const file = this.doctorRegistrationForm.value.file._files[0];
         const randomId = Math.random().toString(36).substring(2);
         const fileRef = this.fireStorage.storage.ref(`doctors/${randomId}.jpg`);
-        fileRef.put(file);
         this.db
           .collection('users')
           .doc(this.doctorRegistrationForm.value.email)

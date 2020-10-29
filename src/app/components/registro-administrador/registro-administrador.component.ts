@@ -54,5 +54,7 @@ export class RegistroAdministradorComponent implements OnInit {
         this.router.navigate(['Administrador']);
       });
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(['Administrador']);
+  }
 }

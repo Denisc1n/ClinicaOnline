@@ -14,12 +14,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatNativeDateModule } from '@angular/material/core';
 import 'hammerjs';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthenticationService } from './services/authentication.service';
@@ -37,6 +39,10 @@ import { PrincipalAdministradorComponent } from './components/principal-administ
 import { RegistroAdministradorComponent } from './components/registro-administrador/registro-administrador.component';
 import { AltaProfesionalesComponent } from './components/alta-profesionales/alta-profesionales.component';
 import { MatTableModule } from '@angular/material/table';
+import { HorariosDoctorComponent } from './components/horarios-doctor/horarios-doctor.component';
+import { DatePipe } from '@angular/common';
+import { SummaryModalComponent } from './components/principal/summary-modal/summary-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -50,6 +56,8 @@ import { MatTableModule } from '@angular/material/table';
     PrincipalAdministradorComponent,
     RegistroAdministradorComponent,
     AltaProfesionalesComponent,
+    HorariosDoctorComponent,
+    SummaryModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +84,9 @@ import { MatTableModule } from '@angular/material/table';
     MaterialFileInputModule,
     MatSelectModule,
     MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
   ],
   exports: [MatFormFieldModule, MatInputModule],
   providers: [
@@ -83,6 +94,9 @@ import { MatTableModule } from '@angular/material/table';
     AuthGuardService,
     UsersService,
     DataService,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

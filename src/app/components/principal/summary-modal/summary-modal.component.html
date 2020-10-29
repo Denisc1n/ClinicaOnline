@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>¿Como se desarrolló el turno?</h1>
+<div mat-dialog-content>
+  <mat-form-field style="width: 400px !important">
+    <input matInput [(ngModel)]="data.summary" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data.summary" cdkFocusInitial>
+    Ok
+  </button>
+</div>

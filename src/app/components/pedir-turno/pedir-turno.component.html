@@ -16,9 +16,9 @@
     <ul>
       <li
         *ngFor="let profesional of this.doctors | isActive"
-        (click)="setHorariosProfesional(profesional)"
+        (click)="selectProfesional(profesional.email)"
       >
-        {{ profesional.apellido }}
+        <p style="color: white; font-size: large">{{ profesional.apellido }}</p>
       </li>
     </ul>
   </div>
@@ -44,5 +44,76 @@
         <b>{{ especialidad.nombre | uppercase }}</b>
       </li>
     </ul>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="activation-card">
+    <mat-card style="width: 25%" *ngIf="showAppointmentBoard">
+      <mat-card-header>
+        <mat-card-title style="color: blueviolet"
+          >Seleccionar Horario</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content fxLayout="column">
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [formControl]="date"
+          style="color: blueviolet"
+          [matDatepickerFilter]="sundayFilter"
+          [min]="minDate"
+          [max]="maxDate"
+          (dateInput)="checkDay()"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+          style="color: blueviolet"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <br />
+        <!-- <p style="color: blueviolet">Inicio:</p>
+        <ngb-timepicker
+          [formControl]="start"
+          [minuteStep]="30"
+          required
+        ></ngb-timepicker>
+        <div *ngIf="start.valid" class="small form-text text-success">
+          Horario Válido
+        </div>
+        <div *ngIf="start.errors" class="small form-text text-danger">
+          <div *ngIf="start.errors['required']"></div>
+          <div *ngIf="start.errors['tooLate']" style="color: red">
+            El horario de atencion del profesional es anterior al seleccionado.
+          </div>
+          <div *ngIf="start.errors['tooEarly']" style="color: red">
+            El horario de atencion del profesional es posterior al seleccionado.
+          </div>
+        </div> -->
+        <mat-select
+          id="selectTime"
+          panelClass="mat-select-panel"
+          [formControl]="selectedTime"
+          required
+          placeholder="Seleccione horario"
+        >
+          <mat-option
+            style="color: blueviolet"
+            value="{{ appointment }}"
+            *ngFor="let appointment of appointments"
+          >
+            {{ appointment }}
+          </mat-option>
+        </mat-select>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!selectedTime.valid && !date.valid"
+          (click)="saveAppointment()"
+        >
+          Guardar
+        </button>
+      </mat-card-content>
+    </mat-card>
+    <div></div>
   </div>
 </div>
