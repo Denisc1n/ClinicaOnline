@@ -50,7 +50,7 @@
 
 .button-filter button {
   width: 35%;
-  background: rgb(97, 140, 78);
+  background: blueviolet;
   border: none;
   font-size: 1.1em;
   cursor: pointer;
@@ -59,7 +59,7 @@
 }
 
 .button-filter button:hover {
-  background: rgb(58, 83, 47);
+  background: darkslateblue;
   box-shadow: 0px 1px 2px 0px black;
 }
 

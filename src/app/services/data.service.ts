@@ -149,4 +149,12 @@ export class DataService {
   saveSummary(params) {
     this.db.collection('summaries').add(params);
   }
+
+  retrieveSummary(email, id) {
+    return this.db
+      .collection('summaries')
+      .ref.where('appointmentId', '==', id)
+      .where('receiverEmail', '==', email)
+      .get();
+  }
 }

@@ -114,6 +114,14 @@
         >
           Dar Reseña
         </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="readSummary(element)"
+          [disabled]="!element.hasSummaryDoctor"
+        >
+          Ver Reseña recibida
+        </button>
       </td>
     </ng-container>
 
@@ -178,6 +186,14 @@
           [disabled]="!element.isDone || element.hasSummaryDoctor"
         >
           Dar Reseña
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="readSummary(element)"
+          [disabled]="!element.hasSummaryPatient"
+        >
+          Ver Reseña recibida
         </button>
       </td>
     </ng-container>

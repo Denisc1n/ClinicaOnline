@@ -83,7 +83,7 @@ export class PrincipalComponent implements OnInit {
   writeSummary(appointment) {
     const dialogRef = this.dialog.open(SummaryModalComponent, {
       width: '500px',
-      data: { summary: '' },
+      data: { summary: '', readOnly: false },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -127,5 +127,24 @@ export class PrincipalComponent implements OnInit {
         this.toastr.success('Reseña guardada con exito.');
       }
     });
+  }
+
+  readSummary(element) {
+    let datos;
+
+    this.dataService
+      .retrieveSummary(this.currentUser.email, element.id)
+      .then((data) => {
+        console.log(data);
+        data.docs.forEach((data) => {
+          console.log(data.data());
+          datos = data.data();
+          datos.id = data.id;
+        });
+        const dialogRef = this.dialog.open(SummaryModalComponent, {
+          width: '500px',
+          data: { summary: datos.summary, readOnly: true },
+        });
+      });
   }
 }
