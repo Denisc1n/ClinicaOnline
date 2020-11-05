@@ -150,7 +150,7 @@ export class PedirTurnoComponent implements OnInit {
     try {
       let standardDate = this.datePipe.transform(
         new Date(this.date.value),
-        'dd-MM-yyyy'
+        'MM-dd-yyyy'
       );
       this.dataService.setAppointment({
         doctorEmail: this.selectedDoctor.email,

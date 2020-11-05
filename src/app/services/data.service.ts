@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -7,7 +8,7 @@ import { resolve } from 'dns';
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore, private datePipe: DatePipe) {}
 
   getPractices() {
     let practices = [];
@@ -124,6 +125,9 @@ export class DataService {
             let docData = doc.data();
             docData.id = doc.id;
             pendingAppointments.push(docData);
+            pendingAppointments = pendingAppointments.sort((a, b) => {
+              return new Date(b.date).getDate() - new Date(a.date).getDate();
+            });
           });
           resolve(pendingAppointments);
         });
