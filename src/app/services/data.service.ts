@@ -103,6 +103,11 @@ export class DataService {
       time: params.time,
       isComplete: false,
       doctorName: params.doctorName,
+      patientName: params.patientName,
+      isCancelled: false,
+      isDone: false,
+      hasSummaryDoctor: false,
+      hasSummaryPatient: false,
     });
   }
 
@@ -134,18 +139,23 @@ export class DataService {
       .doc(params.id)
       .update({ isCancelled: true, isDone: true });
   }
-  setAppointmentComplete(params, userType) {
-    console.log(params);
+  saveAppointmentStatus(params, userType) {
     let updatedStates;
     if (userType == 'patient') {
-      updatedStates = { hasSummaryPatient: true, isComplete: true };
+      updatedStates = { hasSummaryPatient: true };
     } else {
-      updatedStates = { hasSummaryDoctor: true, isComplete: true };
+      updatedStates = { hasSummaryDoctor: true };
     }
 
     this.db.collection('appointments').doc(params.id).update(updatedStates);
   }
 
+  setAppointmentComplete(params) {
+    this.db
+      .collection('appointments')
+      .doc(params.id)
+      .update({ isComplete: true });
+  }
   saveSummary(params) {
     this.db.collection('summaries').add(params);
   }
@@ -155,6 +165,17 @@ export class DataService {
       .collection('summaries')
       .ref.where('appointmentId', '==', id)
       .where('receiverEmail', '==', email)
+      .get();
+  }
+
+  saveMedicalHistory(params) {
+    this.db.collection('medicalHistories').add(params);
+  }
+
+  retrieveMedicalHistory(email, id) {
+    return this.db
+      .collection('medicalHistories')
+      .ref.where('appointmentId', '==', id)
       .get();
   }
 }

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../services/data.service';
 import { UsersService } from '../../services/users.service';
+import { MedicalHistoryComponent } from './medical-history/medical-history.component';
 import { SummaryModalComponent } from './summary-modal/summary-modal.component';
 
 @Component({
@@ -29,6 +30,7 @@ export class PrincipalComponent implements OnInit {
     'date',
     'time',
     'actions',
+    'medicalHistory',
   ];
 
   constructor(
@@ -50,7 +52,6 @@ export class PrincipalComponent implements OnInit {
         })
         .then((data) => {
           this.appointments = data;
-          console.log(this.appointments);
         });
     });
   }
@@ -64,21 +65,50 @@ export class PrincipalComponent implements OnInit {
       })
       .then((data) => {
         this.appointments = data;
-        console.log(this.appointments);
       });
     this.toastr.error('Turno Cancelado.');
   }
   activateAppointment(appointment) {
-    this.dataService.setAppointmentDone(appointment);
-    this.dataService
-      .getAppointments({
-        userType: this.currentUser.perfil,
-        email: this.currentUser.email,
-      })
-      .then((data) => {
-        this.appointments = data;
-      });
-    this.toastr.success('Turno Atendido. Reseña Disponible.');
+    const dialogRef = this.dialog.open(MedicalHistoryComponent, {
+      width: '1500px',
+      data: { readOnly: false },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        try {
+          let medicalHistory = [];
+          result.forEach((element) => {
+            medicalHistory.push(element);
+            // medicalHistory[element.field] = element.value;
+          });
+
+          let newHistory = {
+            doctorEmail: this.currentUser.email,
+            doctorName: appointment.doctorName,
+            patientEmail: appointment.patient,
+            patientName: appointment.patientName,
+            appointmentId: appointment.id,
+            medicalHistory,
+          };
+          this.dataService.saveMedicalHistory(newHistory);
+
+          this.dataService.setAppointmentComplete(appointment);
+          this.dataService
+            .getAppointments({
+              userType: this.currentUser.perfil,
+              email: this.currentUser.email,
+            })
+            .then((data) => {
+              this.appointments = data;
+            });
+          this.toastr.success('Historia Clínica guardada.');
+        } catch (error) {
+          this.toastr.error('Error al guardar la historia clínica.');
+        }
+      }
+    });
   }
   writeSummary(appointment) {
     const dialogRef = this.dialog.open(SummaryModalComponent, {
@@ -112,7 +142,7 @@ export class PrincipalComponent implements OnInit {
         };
 
         this.dataService.saveSummary(summaryParams);
-        this.dataService.setAppointmentComplete(
+        this.dataService.saveAppointmentStatus(
           appointment,
           this.currentUser.perfil
         );
@@ -135,15 +165,30 @@ export class PrincipalComponent implements OnInit {
     this.dataService
       .retrieveSummary(this.currentUser.email, element.id)
       .then((data) => {
-        console.log(data);
         data.docs.forEach((data) => {
-          console.log(data.data());
           datos = data.data();
           datos.id = data.id;
         });
         const dialogRef = this.dialog.open(SummaryModalComponent, {
           width: '500px',
           data: { summary: datos.summary, readOnly: true },
+        });
+      });
+  }
+
+  showMedicalHistory(appointment) {
+    let receivedData;
+
+    this.dataService
+      .retrieveMedicalHistory(this.currentUser.email, appointment.id)
+      .then((data) => {
+        data.docs.forEach((data) => {
+          receivedData = data.data();
+          receivedData.id = data.id;
+          const dialogRef = this.dialog.open(MedicalHistoryComponent, {
+            width: '500px',
+            data: { receivedData, readOnly: true },
+          });
         });
       });
   }

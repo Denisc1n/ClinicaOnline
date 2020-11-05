@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Observaciones</h1>
+<div mat-dialog-content *ngFor="let field of fields; let in = index">
+  <li class="mat-form-field--inline">
+    <mat-form-field>
+      <input
+        placeholder="Ingrese nombre de la observación"
+        matInput
+        [(ngModel)]="fields[in].field"
+        [disabled]="data.readOnly"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        placeholder="Complete la informacion"
+        matInput
+        [(ngModel)]="fields[in].value"
+        [disabled]="data.readOnly"
+        required
+      />
+    </mat-form-field>
+  </li>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    mat-button
+    *ngIf="!data.readOnly"
+    (click)="add()"
+    [disabled]="fields.length > 2"
+  >
+    Agregar Campos
+  </button>
+  <button mat-button (click)="onNoClick()" *ngIf="!data.readOnly">
+    Cancelar
+  </button>
+  <button
+    mat-button
+    [mat-dialog-close]="fields"
+    [disabled]="fields[0].field === ''"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</div>

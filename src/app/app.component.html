@@ -1,1 +1,3 @@
-<router-outlet></router-outlet>
+<div [@routeAnimations]="prepareRoute(outlet)" class="animation">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>

@@ -122,7 +122,10 @@ export class PedirTurnoComponent implements OnInit {
       this.practices = datos;
     });
     this.usersService.getCurrentUser().then((data: any) => {
-      this.currentUser = data.email;
+      this.currentUser = {
+        email: data.email,
+        name: `${data.apellido}, ${data.nombre}`,
+      };
     });
   }
   filterLastName() {
@@ -151,10 +154,11 @@ export class PedirTurnoComponent implements OnInit {
       );
       this.dataService.setAppointment({
         doctorEmail: this.selectedDoctor.email,
-        patientEmail: this.currentUser,
+        patientEmail: this.currentUser.email,
         date: standardDate,
         time: this.selectedTime.value,
         doctorName: `${this.selectedDoctor.apellido}, ${this.selectedDoctor.nombre}`,
+        patientName: this.currentUser.name,
         hasSummaryDoctor: false,
         hasSummaryPatient: false,
         isDone: false,

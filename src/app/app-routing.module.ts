@@ -12,25 +12,33 @@ import { AuthGuardService } from './guards/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'Login', component: LoginComponent },
+  {
+    path: 'Login',
+    component: LoginComponent,
+    data: { animation: 'Login' },
+  },
   {
     path: 'Principal',
     component: PrincipalComponent,
     canActivate: [AuthGuardService],
+    data: { animation: 'Principal' },
   },
   {
     path: 'Administrador',
     component: PrincipalAdministradorComponent,
     canActivate: [AuthGuardService],
+    data: { animation: 'Administrador' },
   },
   {
     path: 'Registrar-admin',
     component: RegistroAdministradorComponent,
     canActivate: [AuthGuardService],
+    data: { animation: 'Registrar-admin' },
   },
   {
     path: 'Registro',
     component: RegistroGeneralComponent,
+    data: { animation: 'Registro' },
   },
   {
     path: 'Pedir-turno',
@@ -46,6 +54,7 @@ const routes: Routes = [
     path: 'Administrar-horarios',
     component: HorariosDoctorComponent,
     canActivate: [AuthGuardService],
+    data: { animation: 'Administrar-horarios' },
   },
 ];
 

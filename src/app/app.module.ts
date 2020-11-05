@@ -43,6 +43,7 @@ import { HorariosDoctorComponent } from './components/horarios-doctor/horarios-d
 import { DatePipe } from '@angular/common';
 import { SummaryModalComponent } from './components/principal/summary-modal/summary-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MedicalHistoryComponent } from './components/principal/medical-history/medical-history.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AltaProfesionalesComponent,
     HorariosDoctorComponent,
     SummaryModalComponent,
+    MedicalHistoryComponent,
   ],
   imports: [
     BrowserModule,
