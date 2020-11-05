@@ -37,7 +37,12 @@
   <button
     mat-button
     [mat-dialog-close]="fields"
-    [disabled]="fields[0].field === ''"
+    [disabled]="
+      fields[0].value === '' &&
+      fields[1].value === '' &&
+      fields[2].value === '' &&
+      fields[3].value === ''
+    "
     cdkFocusInitial
   >
     Ok

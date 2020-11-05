@@ -10,7 +10,19 @@ import { ToastrService } from 'ngx-toastr';
 export class MedicalHistoryComponent implements OnInit {
   fields = this.data?.receivedData?.medicalHistory ?? [
     {
-      field: '',
+      field: 'Peso',
+      value: '',
+    },
+    {
+      field: 'Edad',
+      value: '',
+    },
+    {
+      field: 'Temperatura Corporal',
+      value: '',
+    },
+    {
+      field: 'Presion',
       value: '',
     },
   ];
