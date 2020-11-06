@@ -5,7 +5,7 @@
       <input
         placeholder="Ingrese nombre de la observación"
         matInput
-        [(ngModel)]="fields[in].field"
+        [(ngModel)]="fields[in].fieldName"
         [disabled]="data.readOnly"
         required
       />
@@ -14,7 +14,7 @@
       <input
         placeholder="Complete la informacion"
         matInput
-        [(ngModel)]="fields[in].value"
+        [(ngModel)]="fields[in].fieldValue"
         [disabled]="data.readOnly"
         required
       />

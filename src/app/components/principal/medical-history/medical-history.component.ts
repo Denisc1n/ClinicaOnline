@@ -8,22 +8,22 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./medical-history.component.css'],
 })
 export class MedicalHistoryComponent implements OnInit {
-  fields = this.data?.receivedData?.medicalHistory ?? [
+  fields = this.data?.receivedData ?? [
     {
-      field: 'Peso',
-      value: '',
+      fieldName: 'Peso',
+      fieldValue: '',
     },
     {
-      field: 'Edad',
-      value: '',
+      fieldName: 'Edad',
+      fieldValue: '',
     },
     {
-      field: 'Temperatura Corporal',
-      value: '',
+      fieldName: 'Temperatura Corporal',
+      fieldValue: '',
     },
     {
-      field: 'Presion',
-      value: '',
+      fieldName: 'Presion',
+      fieldValue: '',
     },
   ];
   name: string;
@@ -33,12 +33,15 @@ export class MedicalHistoryComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('aca');
+    console.log(this.data.receivedData);
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   add() {
-    this.fields.push({ field: '', value: '' });
+    this.fields.push({ fieldName: '', fieldValue: '' });
   }
 }

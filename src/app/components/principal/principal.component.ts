@@ -78,21 +78,26 @@ export class PrincipalComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         try {
-          let medicalHistory = [];
-          result.forEach((element) => {
-            medicalHistory.push(element);
-            // medicalHistory[element.field] = element.value;
-          });
-
-          let newHistory = {
+          console.log(result);
+          let newHistoryData = {};
+          let historyInfo = {
             doctorEmail: this.currentUser.email,
             doctorName: appointment.doctorName,
             patientEmail: appointment.patient,
             patientName: appointment.patientName,
             appointmentId: appointment.id,
-            medicalHistory,
           };
-          this.dataService.saveMedicalHistory(newHistory);
+          result.forEach((element) => {
+            newHistoryData[`dato{*}${element.field}`] = element.value;
+
+            newHistoryData = {
+              ...historyInfo,
+              ...newHistoryData,
+              [`dato{*}${element.field}`]: element.value,
+            };
+          });
+
+          this.dataService.saveMedicalHistory(newHistoryData);
 
           this.dataService.setAppointmentComplete(appointment);
           this.dataService
@@ -105,6 +110,7 @@ export class PrincipalComponent implements OnInit {
             });
           this.toastr.success('Historia Clínica guardada.');
         } catch (error) {
+          console.log(error);
           this.toastr.error('Error al guardar la historia clínica.');
         }
       }
@@ -177,14 +183,22 @@ export class PrincipalComponent implements OnInit {
   }
 
   showMedicalHistory(appointment) {
-    let receivedData;
+    let receivedData = [];
 
     this.dataService
       .retrieveMedicalHistory(this.currentUser.email, appointment.id)
       .then((data) => {
         data.docs.forEach((data) => {
-          receivedData = data.data();
-          receivedData.id = data.id;
+          const fieldsReceived = Object.entries(data.data());
+
+          fieldsReceived.forEach((element) => {
+            if (element[0].includes('{*}')) {
+              const fieldName = element[0].split('{*}', 2)[1];
+              const fieldValue = element[1];
+              receivedData.push({ fieldName, fieldValue });
+            }
+          });
+          console.log(receivedData);
           const dialogRef = this.dialog.open(MedicalHistoryComponent, {
             width: '500px',
             data: { receivedData, readOnly: true },
