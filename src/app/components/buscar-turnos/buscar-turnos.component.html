@@ -1,0 +1,248 @@
+<div fxLayout="column" fxLayoutAlign="center center" style="width: 100%">
+  <button mat-raised-button color="primary" (click)="goBack()">Volver</button>
+  <mat-form-field>
+    <mat-label style="color: blueviolet">Filtrado</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      (input)="cambioFiltro($event)"
+      placeholder="Ex. ium"
+      #input
+      style="color: blueviolet"
+    />
+  </mat-form-field>
+  <div class="tablaTurnos">
+    <table>
+      <tbody>
+        <tr>
+          <td class="main-td">DIA</td>
+          <td class="main-td">FECHA</td>
+          <td class="main-td">HORA</td>
+          <td class="main-td">ESPECIALIDAD</td>
+          <td class="main-td">ESTADO</td>
+          <td class="main-td">NOMBRE PACIENTE</td>
+          <td class="main-td">NOMBRE PROFESIONAL</td>
+          <td class="main-td">EDAD</td>
+          <td class="main-td">TEMPERATURA</td>
+          <td class="main-td">PRESION</td>
+          <td class="main-td">Campo Dinamico 1</td>
+          <td class="main-td">Campo Dinamico 2</td>
+          <td class="main-td">Campo Dinamico 3</td>
+        </tr>
+        <tr
+          *ngFor="let turno of appointments | diaDeLaFecha"
+          (click)="selectAppointment(turno)"
+        >
+          <td class="textColor">{{ turno.dia }}</td>
+          <td class="textColor">{{ turno.date }}</td>
+          <td class="textColor">{{ turno.time }}</td>
+          <td class="textColor">{{ turno.practice }}</td>
+          <td [changeStatusColor]="turno.status">
+            {{ turno.status }}
+          </td>
+
+          <td class="textColor">{{ turno.patientName }}</td>
+          <td class="textColor">{{ turno.doctorName }}</td>
+          <td class="textColor">{{ turno.Edad }}</td>
+          <td class="textColor">{{ turno.Presion }}</td>
+          <td class="textColor">{{ turno.TemperaturaCorporal }}</td>
+          <td class="textColor">
+            {{ turno.CampoDinamico0?.name }}:{{ turno.CampoDinamico0?.value }}
+          </td>
+          <td class="textColor">
+            {{ turno.CampoDinamico1?.name }}:{{ turno.CampoDinamico1?.value }}
+          </td>
+          <td class="textColor">
+            {{ turno.CampoDinamico2?.name }}:{{ turno.CampoDinamico2?.value }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <table
+      matSort
+      mat-table
+      [dataSource]="appointments"
+      style="color: blueviolet; width: 100%"
+    >
+      <ng-container matColumnDef="doctorName">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Nombre Doctor
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.doctorName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="patientName">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Nombre Paciente
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.patientName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th
+          class="appointmentColumn"
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Fecha
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.date | date: "dd-MM-yyyy" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="time">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Hora
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.time }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dato_edad">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Edad
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.Edad }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dato_peso">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Peso
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.Peso }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dato_temperatura">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Temperatura
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element["Temperatura Corporal"] }}°C
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dato_presion">
+        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
+          Presion
+        </th>
+        <td class="appointmentColumn" mat-cell *matCellDef="let element">
+          {{ element.Presion }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: getDisplayedColumns()"
+        (click)="selectRow(row)"
+      ></tr>
+    </table> -->
+  </div>
+  <br />
+  <mat-card *ngIf="showDetails">
+    <mat-card-header>
+      <mat-card-title style="color: blueviolet"
+        >Detalles del Turno</mat-card-title
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <li></li> -->
+      <div fxLayout="row">
+        <p style="color: blueviolet">
+          Nombre Doctor:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.doctorName"
+            readonly
+          />
+        </p>
+
+        <p style="color: blueviolet">
+          Nombre Paciente:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.patientName"
+            readonly
+          />
+        </p>
+
+        <p style="color: blueviolet">
+          Fecha:
+          <input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.date"
+            readonly
+          />
+        </p>
+
+        <p style="color: blueviolet">
+          Estado:
+          <input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.status"
+            readonly
+          />
+        </p>
+
+        <p style="color: blueviolet">
+          Especialidad:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.practice"
+            readonly
+          />
+        </p>
+
+        <!-- <p>Nombre Doctor</p>
+      :<input
+        class="textColor"
+        matInput
+        [(ngModel)]="selectedAppointment.status"
+        readonly
+      /> -->
+      </div>
+      <div fxLayout="row">
+        <p style="color: blueviolet">
+          Peso:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.Peso"
+            readonly
+          />
+        </p>
+        <p style="color: blueviolet">
+          Presion:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.Presion"
+            readonly
+          />
+        </p>
+        <p style="color: blueviolet">
+          Temperatura Corporal:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.TemperaturaCorporal"
+            readonly
+          />
+        </p>
+        <p style="color: blueviolet">
+          Edad:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.Edad"
+            readonly
+          />
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

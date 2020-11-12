@@ -28,22 +28,54 @@
         *ngFor="let especialidad of this.practices"
         (click)="selectPractice(especialidad.nombre)"
       >
-        <b>{{ especialidad.nombre | uppercase }}</b>
+        <b style="color: white">{{ especialidad.nombre | uppercase }}</b>
+      </li>
+    </ul>
+  </div>
+  <div class="listado-apellido" *ngIf="showSpecialtyDoctors">
+    <ul>
+      <li
+        *ngFor="let profesional of this.specialtyDoctors | isActive"
+        (click)="selectProfesional(profesional.email)"
+      >
+        <p style="color: white; font-size: large">{{ profesional.apellido }}</p>
       </li>
     </ul>
   </div>
   <div
     class="listado-apellido"
-    *ngIf="this.listadoMostrar == 'practiceDoctors-list'"
+    *ngIf="showSpecialtyDoctors && (specialtyDoctors | isActive).length == 0"
+  >
+    <br />
+    <h1 style="color: blueviolet; text-align: center">
+      No hay doctores disponibles
+    </h1>
+  </div>
+  <div class="listado-apellido" *ngIf="this.listadoMostrar == 'listado-semana'">
+    <ul>
+      <li *ngFor="let day of this.weekDays" (click)="selectWeekday(day)">
+        <b style="color: white">{{ day | uppercase }}</b>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="listado-apellido"
+    *ngIf="showWeekDoctors && this.weekDoctors.length > 0"
   >
     <ul>
       <li
-        *ngFor="let especialidad of this.filteredDoctors"
-        (click)="selectPractice(especialidad.nombre)"
+        *ngFor="let doctor of this.weekDoctors | isActive"
+        (click)="selectProfesional(doctor.email)"
       >
-        <b>{{ especialidad.nombre | uppercase }}</b>
+        <p style="color: white; font-size: large">{{ doctor.apellido }}</p>
       </li>
     </ul>
+  </div>
+  <div class="listado-apellido" *ngIf="showWeekDoctors && !doctorsAvailable">
+    <br />
+    <h1 style="color: blueviolet; text-align: center">
+      No hay doctores disponibles
+    </h1>
   </div>
   <div fxLayout="row" fxLayoutAlign="center center" class="activation-card">
     <mat-card style="width: 25%" *ngIf="showAppointmentBoard">
@@ -61,7 +93,7 @@
           [matDatepickerFilter]="sundayFilter"
           [min]="minDate"
           [max]="maxDate"
-          (dateInput)="checkDay()"
+          (dateInput)="retrieveAvailableAppointments()"
         />
         <mat-datepicker-toggle
           matSuffix
@@ -70,24 +102,6 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
         <br />
-        <!-- <p style="color: blueviolet">Inicio:</p>
-        <ngb-timepicker
-          [formControl]="start"
-          [minuteStep]="30"
-          required
-        ></ngb-timepicker>
-        <div *ngIf="start.valid" class="small form-text text-success">
-          Horario Válido
-        </div>
-        <div *ngIf="start.errors" class="small form-text text-danger">
-          <div *ngIf="start.errors['required']"></div>
-          <div *ngIf="start.errors['tooLate']" style="color: red">
-            El horario de atencion del profesional es anterior al seleccionado.
-          </div>
-          <div *ngIf="start.errors['tooEarly']" style="color: red">
-            El horario de atencion del profesional es posterior al seleccionado.
-          </div>
-        </div> -->
         <mat-select
           id="selectTime"
           panelClass="mat-select-panel"

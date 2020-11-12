@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>¿Cual especialidad va a ejercer?</h1>
+<div mat-dialog-content>
+  <mat-form-field style="width: 400px !important">
+    <mat-select
+      id="selectPractices"
+      panelClass="mat-select-panel"
+      required
+      [(ngModel)]="data.practice"
+    >
+      <mat-option
+        style="color: blueviolet"
+        value="{{ especialidad }}"
+        *ngFor="let especialidad of data.practices"
+      >
+        {{ especialidad }}
+      </mat-option>
+    </mat-select>
+    <!-- <input matInput [(ngModel)]="data.practice" [disabled]="data.readOnly" /> -->
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.practice" cdkFocusInitial>
+    Ok
+  </button>
+</div>

@@ -3,7 +3,12 @@
   [profile]="profile"
   [showLogout]="showLogout"
 ></app-toolbar>
-<div fxLayout="row" fxLayoutAlign="center center" class="login-main">
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  class="login-main"
+  *ngIf="!showAppointments"
+>
   <mat-card style="width: 30%">
     <mat-card-header>
       <mat-card-title>Crear Nuevo Admin</mat-card-title>
@@ -29,4 +34,20 @@
       </button>
     </mat-card-content>
   </mat-card>
+  <mat-card style="width: 30%">
+    <mat-card-header>
+      <mat-card-title>Buscar Turnos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button color="primary" (click)="changeView()">
+        Buscar Turnos
+      </button>
+    </mat-card-content>
+  </mat-card>
 </div>
+<app-buscar-turnos
+  (emitHideTable)="handleHideTable($event)"
+  *ngIf="showAppointments"
+  [appointments]="appointments"
+>
+</app-buscar-turnos>

@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSort } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatInputModule } from '@angular/material/input';
@@ -44,6 +45,10 @@ import { DatePipe } from '@angular/common';
 import { SummaryModalComponent } from './components/principal/summary-modal/summary-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MedicalHistoryComponent } from './components/principal/medical-history/medical-history.component';
+import { BuscarTurnosComponent } from './components/buscar-turnos/buscar-turnos.component';
+import { SelectPracticeComponent } from './components/principal/select-practice/select-practice.component';
+import { DiaDeLaFechaPipe } from './pipes/dia-de-la-fecha.pipe';
+import { ChangeColorDirective } from './directives/change-color.directive';
 
 @NgModule({
   declarations: [
@@ -60,6 +65,10 @@ import { MedicalHistoryComponent } from './components/principal/medical-history/
     HorariosDoctorComponent,
     SummaryModalComponent,
     MedicalHistoryComponent,
+    BuscarTurnosComponent,
+    SelectPracticeComponent,
+    DiaDeLaFechaPipe,
+    ChangeColorDirective,
   ],
   imports: [
     BrowserModule,

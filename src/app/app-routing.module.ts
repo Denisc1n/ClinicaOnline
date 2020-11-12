@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AltaProfesionalesComponent } from './components/alta-profesionales/alta-profesionales.component';
+import { BuscarTurnosComponent } from './components/buscar-turnos/buscar-turnos.component';
 import { HorariosDoctorComponent } from './components/horarios-doctor/horarios-doctor.component';
 import { LoginComponent } from './components/login/login.component';
 import { PedirTurnoComponent } from './components/pedir-turno/pedir-turno.component';
@@ -55,6 +56,11 @@ const routes: Routes = [
     component: HorariosDoctorComponent,
     canActivate: [AuthGuardService],
     data: { animation: 'Administrar-horarios' },
+  },
+  {
+    path: 'Buscar-turnos',
+    component: BuscarTurnosComponent,
+    canActivate: [AuthGuardService],
   },
 ];
 

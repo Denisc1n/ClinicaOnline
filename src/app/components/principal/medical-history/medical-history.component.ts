@@ -18,7 +18,7 @@ export class MedicalHistoryComponent implements OnInit {
       fieldValue: '',
     },
     {
-      fieldName: 'Temperatura Corporal',
+      fieldName: 'TemperaturaCorporal',
       fieldValue: '',
     },
     {
@@ -33,10 +33,7 @@ export class MedicalHistoryComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {
-    console.log('aca');
-    console.log(this.data.receivedData);
-  }
+  ngOnInit(): void {}
   onNoClick(): void {
     this.dialogRef.close();
   }

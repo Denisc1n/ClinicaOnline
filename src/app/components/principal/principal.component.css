@@ -1,3 +1,31 @@
 .activation-card {
   margin-top: 10%;
 }
+
+.tablaTurnos {
+  overflow-y: scroll;
+  width: 90%;
+  max-height: 300px;
+}
+
+table {
+  width: 100%;
+}
+
+tr {
+  color: var(--blue);
+  text-align: center;
+}
+
+tr:hover {
+  background-color: var(--blueviolet);
+}
+
+tr:active {
+  color: var(--orange);
+  background-color: var(--blue);
+}
+
+.main-td {
+  background-color: blueviolet;
+}

@@ -1,10 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { app } from 'firebase';
 import { ToastrService } from 'ngx-toastr';
+import { of } from 'rxjs';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import { DataService } from '../../services/data.service';
 import { UsersService } from '../../services/users.service';
 import { MedicalHistoryComponent } from './medical-history/medical-history.component';
+import { SelectPracticeComponent } from './select-practice/select-practice.component';
 import { SummaryModalComponent } from './summary-modal/summary-modal.component';
 
 @Component({
@@ -22,6 +27,7 @@ export class PrincipalComponent implements OnInit {
   public currentUser;
 
   public appointments;
+  doctor;
   userProfile;
 
   displayedColumns: string[] = [
@@ -38,21 +44,33 @@ export class PrincipalComponent implements OnInit {
     private fireAuth: AngularFireAuth,
     private dataService: DataService,
     private toastr: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private db: AngularFirestore
   ) {}
 
   ngOnInit(): void {
-    this.userService.getCurrentUser().then((data: any) => {
-      this.currentUser = data;
+    this.userService.getCurrentUser().then((userData: any) => {
+      this.currentUser = userData;
       this.userProfile = this.currentUser.profile;
-      this.dataService
-        .getAppointments({
-          userType: data.perfil,
-          email: this.currentUser.email,
-        })
-        .then((data) => {
-          this.appointments = data;
-        });
+      this.getAppointments({
+        userType: userData.perfil,
+        email: this.currentUser.email,
+      });
+      //     email: this.currentUser.email, });
+      // this.dataService
+      //   .getAppointments({
+      //     userType: userData.perfil,
+      //     email: this.currentUser.email,
+      //   })
+      //   .then((data: any) => {
+      // this.appointments = data;
+      if (userData.perfil == 'doctor') {
+        this.dataService
+          .getProfesional(this.currentUser.email)
+          .then((doctor) => {
+            this.doctor = doctor;
+          });
+      }
     });
   }
 
@@ -69,52 +87,105 @@ export class PrincipalComponent implements OnInit {
     this.toastr.error('Turno Cancelado.');
   }
   activateAppointment(appointment) {
-    const dialogRef = this.dialog.open(MedicalHistoryComponent, {
-      width: '1500px',
-      data: { readOnly: false },
-      disableClose: true,
-    });
+    if (appointment.practice == null) {
+      const dialogRefPractice = this.dialog.open(SelectPracticeComponent, {
+        width: '500px',
+        data: { practice: '', practices: this.doctor.especialidades },
+        disableClose: true,
+      });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        try {
-          console.log(result);
-          let newHistoryData = {};
-          let historyInfo = {
-            doctorEmail: this.currentUser.email,
-            doctorName: appointment.doctorName,
-            patientEmail: appointment.patient,
-            patientName: appointment.patientName,
-            appointmentId: appointment.id,
-          };
-          result.forEach((element) => {
-            newHistoryData[`dato{*}${element.field}`] = element.value;
-
-            newHistoryData = {
-              ...historyInfo,
-              ...newHistoryData,
-              [`dato{*}${element.field}`]: element.value,
-            };
-          });
-
-          this.dataService.saveMedicalHistory(newHistoryData);
-
-          this.dataService.setAppointmentComplete(appointment);
-          this.dataService
-            .getAppointments({
-              userType: this.currentUser.perfil,
-              email: this.currentUser.email,
-            })
-            .then((data) => {
-              this.appointments = data;
-            });
-          this.toastr.success('Historia Clínica guardada.');
-        } catch (error) {
-          console.log(error);
-          this.toastr.error('Error al guardar la historia clínica.');
+      dialogRefPractice.afterClosed().subscribe((result) => {
+        if (result) {
+          this.dataService.updateAppointmentPractice(appointment, result);
         }
-      }
-    });
+
+        const dialogRef = this.dialog.open(MedicalHistoryComponent, {
+          width: '1500px',
+          data: { readOnly: false },
+          disableClose: true,
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            try {
+              let newHistoryData = {};
+              let historyInfo = {
+                doctorEmail: this.currentUser.email,
+                doctorName: appointment.doctorName,
+                patientEmail: appointment.patient,
+                patientName: appointment.patientName,
+                appointmentId: appointment.id,
+              };
+              result.forEach((element) => {
+                newHistoryData = {
+                  ...historyInfo,
+                  ...newHistoryData,
+                  [`dato{*}${element.fieldName}`]: element.fieldValue,
+                };
+              });
+
+              this.dataService.saveMedicalHistory(newHistoryData);
+
+              this.dataService.setAppointmentComplete(appointment);
+              this.dataService
+                .getAppointments({
+                  userType: this.currentUser.perfil,
+                  email: this.currentUser.email,
+                })
+                .then((data) => {
+                  this.appointments = data;
+                });
+              this.toastr.success('Historia Clínica guardada.');
+            } catch (error) {
+              this.toastr.error('Error al guardar la historia clínica.');
+            }
+          }
+        });
+      });
+    } else {
+      const dialogRef = this.dialog.open(MedicalHistoryComponent, {
+        width: '1500px',
+        data: { readOnly: false },
+        disableClose: true,
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          try {
+            let newHistoryData = {};
+            let historyInfo = {
+              doctorEmail: this.currentUser.email,
+              doctorName: appointment.doctorName,
+              patientEmail: appointment.patient,
+              patientName: appointment.patientName,
+              appointmentId: appointment.id,
+            };
+            result.forEach((element) => {
+              newHistoryData = {
+                ...historyInfo,
+                ...newHistoryData,
+                [`dato{*}${element.fieldName}`]: element.fieldValue,
+              };
+            });
+
+            this.dataService.saveMedicalHistory(newHistoryData);
+
+            this.dataService.setAppointmentComplete(appointment);
+            this.dataService
+              .getAppointments({
+                userType: this.currentUser.perfil,
+                email: this.currentUser.email,
+              })
+              .then((data) => {
+                this.appointments = data;
+              });
+            this.toastr.success('Historia Clínica guardada.');
+          } catch (error) {
+            this.toastr.error('Error al guardar la historia clínica.');
+          }
+        }
+      });
+    }
   }
   writeSummary(appointment) {
     const dialogRef = this.dialog.open(SummaryModalComponent, {
@@ -198,11 +269,103 @@ export class PrincipalComponent implements OnInit {
               receivedData.push({ fieldName, fieldValue });
             }
           });
-          console.log(receivedData);
           const dialogRef = this.dialog.open(MedicalHistoryComponent, {
             width: '500px',
             data: { receivedData, readOnly: true },
           });
+        });
+      });
+  }
+
+  getAppointments(params) {
+    let pendingAppointments = [];
+    this.db
+      .collection('appointments')
+      .snapshotChanges()
+      .subscribe((response: any) => {
+        pendingAppointments = [];
+        response.map((res) => {
+          if (
+            res.payload.doc.data()[params.userType] == params.email &&
+            params.userType != 'all'
+          ) {
+            let appointment;
+            if (!res.payload.doc.data().isCancelled) {
+              appointment = {
+                id: res.payload.doc.id,
+                ...res.payload.doc.data(),
+                status: res.payload.doc.data().isComplete
+                  ? 'Completo'
+                  : 'Pendiente',
+              };
+            } else {
+              appointment = {
+                id: res.payload.doc.id,
+                ...res.payload.doc.data(),
+                status: 'Cancelado',
+              };
+            }
+
+            pendingAppointments.push(appointment);
+          }
+          if (params.userType == 'all') {
+            this.db
+              .collection('medicalHistories')
+              .ref.where('appointmentId', '==', res.payload.doc.id)
+              .get()
+              .then((data) => {
+                if (data.docs.length) {
+                  data.docs.forEach((doc) => {
+                    let trimmedData = {};
+                    const fieldsReceived = Object.entries(doc.data());
+                    fieldsReceived.forEach((element) => {
+                      if (element[0].includes('{*}')) {
+                        const fieldName = element[0].split('{*}', 2)[1];
+                        const fieldValue = element[1];
+                        trimmedData[fieldName] = fieldValue;
+                      }
+                    });
+                    let appointment = {
+                      id: res.payload.doc.id,
+                      ...res.payload.doc.data(),
+                      ...trimmedData,
+                      status: res.payload.doc.data().isComplete
+                        ? 'Completo'
+                        : 'Pendiente',
+                    };
+                    pendingAppointments.push(appointment);
+                  });
+                } else {
+                  if (res.payload.doc.data().isCancelled) {
+                    let appointment = {
+                      id: res.payload.doc.id,
+                      ...res.payload.doc.data(),
+                      status: 'Cancelado',
+                    };
+                    pendingAppointments.push(appointment);
+                  } else {
+                    let appointment = {
+                      id: res.payload.doc.id,
+                      ...res.payload.doc.data(),
+                      status: 'Pendiente',
+                    };
+                    pendingAppointments.push(appointment);
+                  }
+                }
+              })
+              .finally(() => {
+                pendingAppointments = pendingAppointments.sort((a, b) => {
+                  return (
+                    new Date(b.date).getDate() - new Date(a.date).getDate()
+                  );
+                });
+              });
+          }
+        });
+        this.appointments = [];
+        this.appointments = pendingAppointments;
+        pendingAppointments = pendingAppointments.sort((a, b) => {
+          return new Date(b.date).getDate() - new Date(a.date).getDate();
         });
       });
   }
