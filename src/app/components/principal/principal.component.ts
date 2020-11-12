@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import { DataService } from '../../services/data.service';
 import { UsersService } from '../../services/users.service';
+import { CancelarTurnoComponent } from './cancelar-turno/cancelar-turno.component';
 import { MedicalHistoryComponent } from './medical-history/medical-history.component';
 import { SelectPracticeComponent } from './select-practice/select-practice.component';
 import { SummaryModalComponent } from './summary-modal/summary-modal.component';
@@ -75,16 +76,25 @@ export class PrincipalComponent implements OnInit {
   }
 
   cancelAppointment(appointment) {
-    this.dataService.setAppointmentCancel(appointment);
-    this.dataService
-      .getAppointments({
-        userType: this.currentUser.perfil,
-        email: this.currentUser.email,
-      })
-      .then((data) => {
-        this.appointments = data;
-      });
-    this.toastr.error('Turno Cancelado.');
+    console.log('aca');
+    const dialogRefCancel = this.dialog.open(CancelarTurnoComponent, {
+      width: '500px',
+      data: { summary: '', readonly: false },
+      disableClose: true,
+    });
+
+    dialogRefCancel.afterClosed().subscribe((result) => {
+      this.dataService.setAppointmentCancel(appointment, result);
+      this.dataService
+        .getAppointments({
+          userType: this.currentUser.perfil,
+          email: this.currentUser.email,
+        })
+        .then((data) => {
+          this.appointments = data;
+        });
+      this.toastr.error('Turno Cancelado.');
+    });
   }
   activateAppointment(appointment) {
     if (appointment.practice == null) {

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Indique motivos de cancelacion</h1>
+<div mat-dialog-content>
+  <mat-form-field style="width: 400px !important">
+    <input matInput [(ngModel)]="data.summary" [disabled]="data.readOnly" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" *ngIf="!data.readOnly">
+    Cancelar
+  </button>
+  <button mat-button [mat-dialog-close]="data.summary" cdkFocusInitial>
+    Ok
+  </button>
+</div>

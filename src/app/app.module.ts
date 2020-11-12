@@ -49,6 +49,7 @@ import { BuscarTurnosComponent } from './components/buscar-turnos/buscar-turnos.
 import { SelectPracticeComponent } from './components/principal/select-practice/select-practice.component';
 import { DiaDeLaFechaPipe } from './pipes/dia-de-la-fecha.pipe';
 import { ChangeColorDirective } from './directives/change-color.directive';
+import { CancelarTurnoComponent } from './components/principal/cancelar-turno/cancelar-turno.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ChangeColorDirective } from './directives/change-color.directive';
     SelectPracticeComponent,
     DiaDeLaFechaPipe,
     ChangeColorDirective,
+    CancelarTurnoComponent,
   ],
   imports: [
     BrowserModule,

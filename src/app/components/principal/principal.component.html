@@ -70,77 +70,6 @@
   style="width: 100%"
   *ngIf="currentUser && currentUser.perfil === 'patient'"
 >
-  <!-- <table
-    mat-table
-    [dataSource]="appointments"
-    style="color: blueviolet; width: 100%"
-  >
-    <ng-container matColumnDef="doctorName">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.doctorName }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.doctor }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>Fecha</th>
-      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef>Hora</th>
-      <td mat-cell *matCellDef="let element">{{ element.time }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Accion(es)</th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="cancelAppointment(element)"
-          [disabled]="element.isComplete || element.isCancelled"
-        >
-          Cancelar Turno
-        </button>
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="writeSummary(element)"
-          [disabled]="element.isCancelled || element.hasSummaryPatient"
-        >
-          Dar Reseña
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="readSummary(element)"
-          [disabled]="!element.hasSummaryDoctor"
-        >
-          Ver Reseña recibida
-        </button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="medicalHistory">
-      <th mat-header-cell *matHeaderCellDef>Historia Clinica</th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="showMedicalHistory(element)"
-          [disabled]="!element.isComplete"
-        >
-          Ver Historia Clínica
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table> -->
   <div class="tablaTurnos">
     <table>
       <tbody>
@@ -157,7 +86,7 @@
         </tr>
         <tr *ngFor="let turno of appointments | diaDeLaFecha">
           <td class="textColor">{{ turno.dia }}</td>
-          <td class="textColor">{{ turno.date }}</td>
+          <td class="textColor">{{ turno.date | date: "dd-MM-yyyy" }}</td>
           <td class="textColor">{{ turno.time }}</td>
           <td class="textColor">{{ turno.practice }}</td>
           <td [changeStatusColor]="turno.status">
@@ -178,7 +107,11 @@
               mat-raised-button
               color="accent"
               (click)="writeSummary(turno)"
-              [disabled]="turno.isCancelled || turno.hasSummaryPatient"
+              [disabled]="
+                turno.isCancelled ||
+                !turno.isComplete ||
+                turno.hasSummaryPatient
+              "
             >
               Dar Reseña
             </button>
@@ -212,88 +145,6 @@
   style="width: 100%"
   *ngIf="currentUser && currentUser.perfil === 'doctor'"
 >
-  <!-- <table
-    mat-table
-    [dataSource]="appointments"
-    style="color: blueviolet; width: 100%"
-  >
-    <ng-container matColumnDef="doctorName">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.patientName }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.patient }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>Fecha</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.date | date: "dd-MM-yyyy" }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef>Hora</th>
-      <td mat-cell *matCellDef="let element">{{ element.time }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Accion(es)</th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          [disabled]="element.isComplete || element.isCancelled"
-          mat-raised-button
-          color="primary"
-          (click)="activateAppointment(element)"
-        >
-          Atender
-        </button>
-        <button
-          [disabled]="element.isComplete || element.isCancelled"
-          mat-raised-button
-          color="warn"
-          (click)="cancelAppointment(element)"
-        >
-          Cancelar Turno
-        </button>
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="writeSummary(element)"
-          [disabled]="!element.isComplete || element.hasSummaryDoctor"
-        >
-          Dar Reseña
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="readSummary(element)"
-          [disabled]="!element.hasSummaryPatient"
-        >
-          Ver Reseña recibida
-        </button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="medicalHistory">
-      <th mat-header-cell *matHeaderCellDef>Historia Clinica</th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="showMedicalHistory(element)"
-          [disabled]="!element.isComplete"
-        >
-          Ver Historia Clínica
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table> -->
-
   <div class="tablaTurnos">
     <table>
       <tbody>
@@ -310,7 +161,7 @@
         </tr>
         <tr *ngFor="let turno of appointments | diaDeLaFecha">
           <td class="textColor">{{ turno.dia }}</td>
-          <td class="textColor">{{ turno.date }}</td>
+          <td class="textColor">{{ turno.date | date: "dd-MM-yyyy" }}</td>
           <td class="textColor">{{ turno.time }}</td>
           <td class="textColor">{{ turno.practice }}</td>
           <td [changeStatusColor]="turno.status">

@@ -25,16 +25,16 @@
           <td class="main-td">EDAD</td>
           <td class="main-td">TEMPERATURA</td>
           <td class="main-td">PRESION</td>
-          <td class="main-td">Campo Dinamico 1</td>
-          <td class="main-td">Campo Dinamico 2</td>
-          <td class="main-td">Campo Dinamico 3</td>
+          <td class="main-td">CAMPO DINAMICO 1</td>
+          <td class="main-td">CAMPO DINAMICO 2</td>
+          <td class="main-td">CAMPO DINAMICO 3</td>
         </tr>
         <tr
           *ngFor="let turno of appointments | diaDeLaFecha"
           (click)="selectAppointment(turno)"
         >
           <td class="textColor">{{ turno.dia }}</td>
-          <td class="textColor">{{ turno.date }}</td>
+          <td class="textColor">{{ turno.date | date: "dd-MM-yyyy" }}</td>
           <td class="textColor">{{ turno.time }}</td>
           <td class="textColor">{{ turno.practice }}</td>
           <td [changeStatusColor]="turno.status">
@@ -58,91 +58,6 @@
         </tr>
       </tbody>
     </table>
-    <!-- <table
-      matSort
-      mat-table
-      [dataSource]="appointments"
-      style="color: blueviolet; width: 100%"
-    >
-      <ng-container matColumnDef="doctorName">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Nombre Doctor
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.doctorName }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="patientName">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Nombre Paciente
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.patientName }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <th
-          class="appointmentColumn"
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-        >
-          Fecha
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.date | date: "dd-MM-yyyy" }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="time">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Hora
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.time }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="dato_edad">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Edad
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.Edad }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="dato_peso">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Peso
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.Peso }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="dato_temperatura">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Temperatura
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element["Temperatura Corporal"] }}°C
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="dato_presion">
-        <th class="appointmentColumn" mat-header-cell *matHeaderCellDef>
-          Presion
-        </th>
-        <td class="appointmentColumn" mat-cell *matCellDef="let element">
-          {{ element.Presion }}
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: getDisplayedColumns()"
-        (click)="selectRow(row)"
-      ></tr>
-    </table> -->
   </div>
   <br />
   <mat-card *ngIf="showDetails">
@@ -191,6 +106,15 @@
             readonly
           />
         </p>
+        <p style="color: blueviolet" *ngIf="selectedAppointment.isCancelled">
+          Motivo Cancelacion:
+          <input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.cancelReason"
+            readonly
+          />
+        </p>
 
         <p style="color: blueviolet">
           Especialidad:<input
@@ -210,7 +134,7 @@
       /> -->
       </div>
       <div fxLayout="row">
-        <p style="color: blueviolet">
+        <p style="color: blueviolet" *ngIf="selectedAppointment.Peso">
           Peso:<input
             class="textColor"
             matInput
@@ -218,7 +142,7 @@
             readonly
           />
         </p>
-        <p style="color: blueviolet">
+        <p style="color: blueviolet" *ngIf="selectedAppointment.Presion">
           Presion:<input
             class="textColor"
             matInput
@@ -226,7 +150,10 @@
             readonly
           />
         </p>
-        <p style="color: blueviolet">
+        <p
+          style="color: blueviolet"
+          *ngIf="selectedAppointment.TemperaturaCorporal"
+        >
           Temperatura Corporal:<input
             class="textColor"
             matInput
@@ -234,11 +161,37 @@
             readonly
           />
         </p>
-        <p style="color: blueviolet">
+        <p style="color: blueviolet" *ngIf="selectedAppointment.Edad">
           Edad:<input
             class="textColor"
             matInput
             [(ngModel)]="selectedAppointment.Edad"
+            readonly
+          />
+        </p>
+      </div>
+      <div fxLayout="row">
+        <p style="color: blueviolet" *ngIf="selectedAppointment.CampoDinamico0">
+          Adicional - {{ selectedAppointment.CampoDinamico0?.name }}:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.CampoDinamico0.value"
+            readonly
+          />
+        </p>
+        <p style="color: blueviolet" *ngIf="selectedAppointment.CampoDinamico1">
+          Adicional - {{ selectedAppointment.CampoDinamico1?.name }}:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.CampoDinamico1.value"
+            readonly
+          />
+        </p>
+        <p style="color: blueviolet" *ngIf="selectedAppointment.CampoDinamico2">
+          Adicional - {{ selectedAppointment.CampoDinamico2?.name }}:<input
+            class="textColor"
+            matInput
+            [(ngModel)]="selectedAppointment.CampoDinamico2.value"
             readonly
           />
         </p>

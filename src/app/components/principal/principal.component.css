@@ -11,9 +11,16 @@
 table {
   width: 100%;
 }
+th {
+  color: white;
+}
 
 tr {
-  color: var(--blue);
+  color: blueviolet;
+  text-align: center;
+}
+td {
+  color: blueviolet;
   text-align: center;
 }
 
@@ -22,10 +29,11 @@ tr:hover {
 }
 
 tr:active {
-  color: var(--orange);
-  background-color: var(--blue);
+  color: palegoldenrod;
+  background-color: wheat;
 }
 
 .main-td {
+  color: white;
   background-color: blueviolet;
 }

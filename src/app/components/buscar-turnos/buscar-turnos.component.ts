@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -18,7 +19,7 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./buscar-turnos.component.css'],
 })
 export class BuscarTurnosComponent implements OnInit {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private datePipe: DatePipe) {}
   @Output() emitHideTable: EventEmitter<any> = new EventEmitter<any>();
   showHome = true;
   showLogout = true;
@@ -89,6 +90,11 @@ export class BuscarTurnosComponent implements OnInit {
 
   selectAppointment(element) {
     this.selectedAppointment = element;
+    // this.selectedAppointment.date = this.datePipe.transform(
+    //   element.date,
+    //   'dd-MM-yyyy'
+    // );
+    // console.log(this.selectedAppointment.date);
     this.showDetails = true;
   }
   getDisplayedColumns(): string[] {

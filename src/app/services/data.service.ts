@@ -222,11 +222,11 @@ export class DataService {
   setAppointmentDone(params) {
     this.db.collection('appointments').doc(params.id).update({ isDone: true });
   }
-  setAppointmentCancel(params) {
+  setAppointmentCancel(params, result) {
     this.db
       .collection('appointments')
       .doc(params.id)
-      .update({ isCancelled: true, isDone: true });
+      .update({ isCancelled: true, isDone: true, cancelReason: result });
   }
   saveAppointmentStatus(params, userType) {
     let updatedStates;
